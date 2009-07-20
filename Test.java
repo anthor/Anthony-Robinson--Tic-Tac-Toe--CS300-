@@ -1,6 +1,6 @@
 /*
  * Test java program to remember how to program in java
- *
+ * Experiment version
  */
 import javax.swing.JFrame;
 import java.awt.Toolkit;
