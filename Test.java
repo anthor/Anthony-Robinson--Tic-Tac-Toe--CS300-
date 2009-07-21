@@ -1,10 +1,8 @@
 /*
  * Test java program to remember how to program in java
-<<<<<<< HEAD:Test.java
  *
  * Change in master...
  * Experiment version
->>>>>>> experimental:Test.java
  */
 import javax.swing.JFrame;
 import java.awt.Toolkit;
