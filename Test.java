@@ -66,14 +66,15 @@ public class Test extends JFrame {
         bottomPanel.add(Box.createHorizontalGlue());
 
         JPanel boardPanel = new JPanel();
-        boardPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        boardPanel.setLayout(new GridLayout(3,3,5,5));
+        boardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        boardPanel.setLayout(new GridLayout(3,3,0,0));
         boardPanel.setMaximumSize(new Dimension(300,250));
         boardPanel.setAlignmentX(0f);
         boardPanel.setAlignmentY(.5f);
-        boardPanel.setBackground(backgroundColor);
+        boardPanel.setBackground(Color.black);
+
         ImageIcon boardSquare = new ImageIcon("square.png");
-        
+        ImageIcon boardSquareOver = new ImageIcon("squareover.png");
         // ulSquare1.setBorderPainted(true);
         // ulSquare1.setContentAreaFilled(false);
         // ulSquare1.setFocusPainted(false);
@@ -82,8 +83,10 @@ public class Test extends JFrame {
         for(i=0;i<9;++i)
         {
         JButton temp = new JButton(boardSquare);
+        temp.setRolloverIcon(boardSquareOver);
         temp.setMargin(new Insets(0,0,0,0));
         temp.setBorderPainted(false);
+        temp.setIconTextGap(0);
         temp.setContentAreaFilled(false);
         temp.setFocusPainted(false);
         boardPanel.add(temp);
