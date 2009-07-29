@@ -10,10 +10,29 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Graphics;
 
+class JPanel_with_background extends JPanel
+    {
+        private Image img;
 
+        public JPanel_with_background(Image img)
+            {
+            this.img = img;
+            }
+
+        // We have to override paintComponent to have a somewhat hacked background image
+        @Override
+        public void paintComponent(Graphics g)
+            {
+            g.drawImage(img,0,0,null);
+            }
+    }
 
 public class Test extends JFrame {
+
+
 
     public Test()
         {
@@ -35,7 +54,8 @@ public class Test extends JFrame {
             menuBar.add(menu);
             setJMenuBar(menuBar);
 
-            JPanel mainPanel = new JPanel(); // Main panel will contain all the other panels.
+            Image mainBackground = new ImageIcon("Images/background.png").getImage();
+            JPanel mainPanel = new JPanel_with_background(mainBackground);
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             add(mainPanel);
             mainPanel.add(Box.createVerticalGlue());
