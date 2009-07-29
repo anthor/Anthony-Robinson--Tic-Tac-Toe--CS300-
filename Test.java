@@ -68,15 +68,18 @@ public class Test extends JFrame {
             middlePanel.add(Box.createHorizontalGlue());
 
             JPanel boardPanel = new JPanel();
+
             boardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-            boardPanel.setLayout(new GridLayout(3,3,0,0));
-            boardPanel.setMaximumSize(new Dimension(300,250));
+            GridLayout boardPanelGridLayout = new GridLayout(3,3,0,0);
+            boardPanelGridLayout.preferredLayoutSize(boardPanel);
+            boardPanel.setLayout(boardPanelGridLayout);
+            boardPanel.setPreferredSize(new Dimension(300,250));
             boardPanel.setAlignmentX(0f);
             boardPanel.setAlignmentY(.5f);
             boardPanel.setBackground(Color.black);
 
-            ImageIcon boardSquare = new ImageIcon("square.png");
-            ImageIcon boardSquareOver = new ImageIcon("squareover.png");
+            ImageIcon boardSquare = new ImageIcon("Images/tl_box.png");
+            ImageIcon boardSquareOver = new ImageIcon("Images/tl_box_over.png");
             // ulSquare1.setBorderPainted(true);
             // ulSquare1.setContentAreaFilled(false);
             // ulSquare1.setFocusPainted(false);
@@ -104,6 +107,11 @@ public class Test extends JFrame {
             middleRightPanel.add(new JLabel("Blah"));
             middlePanel.add(middleRightPanel);
 
+            JPanel bottomPanel = new JPanel();
+            bottomPanel.setAlignmentX(.5f);
+            bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
+            bottomPanel.add(new JLabel("Blah"));
+            mainPanel.add(bottomPanel);
 
         }
 
