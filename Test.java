@@ -38,7 +38,7 @@ public class Test extends JFrame {
         {
             Color backgroundColor = new Color(255,255,255);
 
-            setSize(400,400);
+            setSize(800,600);
             setTitle("Tic Tac Toe v2.0");
             setResizable(true); // May change depending on requirements.
 
@@ -55,28 +55,29 @@ public class Test extends JFrame {
             setJMenuBar(menuBar);
 
             Image mainBackground = new ImageIcon("Images/background.png").getImage();
-            JPanel mainPanel = new JPanel_with_background(mainBackground);
-            mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-            add(mainPanel);
-            mainPanel.add(Box.createVerticalGlue());
-            mainPanel.setBackground(backgroundColor);
+            JPanel masterPanel = new JPanel_with_background(mainBackground);
+          
+            masterPanel.setLayout(new BoxLayout(masterPanel, BoxLayout.Y_AXIS));
+            add(masterPanel);
+            
+            
 
             JPanel topPanel = new JPanel();
             topPanel.setAlignmentX(.5f);
             topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-            topPanel.setBackground(backgroundColor);
-
             topPanel.add(new JLabel("Blah"));
 
-            mainPanel.add(topPanel);
+            masterPanel.add(topPanel);
 
 
 
             JPanel middlePanel = new JPanel();
             middlePanel.setAlignmentX(.5f);
             middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.X_AXIS));
-            middlePanel.setBackground(backgroundColor);
-            mainPanel.add(middlePanel);
+            middlePanel.setOpaque(false);
+            
+            masterPanel.add(middlePanel);
+            
 
             JPanel middleLeftPanel = new JPanel();
             middleLeftPanel.setAlignmentX(.5f);
@@ -85,37 +86,62 @@ public class Test extends JFrame {
             middleLeftPanel.setBackground(backgroundColor);
 
             middlePanel.add(middleLeftPanel);
-            middlePanel.add(Box.createHorizontalGlue());
 
-            JPanel boardPanel = new JPanel();
-            boardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+            Image boardBackground = new ImageIcon("Images/board_background.png").getImage();
+            JPanel middleCenterPanel = new JPanel();
+            middleCenterPanel.setLayout(null);
+            middleCenterPanel.setPreferredSize(new Dimension(boardBackground.getWidth(null),boardBackground.getHeight(null)));
+            middlePanel.add(middleCenterPanel);
+
+            JPanel boardPanel = new JPanel_with_background(boardBackground);
+            
             boardPanel.setLayout(new GridLayout(3,3,0,0));
-            boardPanel.setMaximumSize(new Dimension(300,250));
-            boardPanel.setAlignmentX(0f);
+            boardPanel.setAlignmentX(.5f);
             boardPanel.setAlignmentY(.5f);
-            boardPanel.setBackground(Color.black);
+            boardPanel.setOpaque(false);
+            boardPanel.setSize(new Dimension(boardBackground.getWidth(null),boardBackground.getHeight(null)));
 
-            ImageIcon boardSquare = new ImageIcon("square.png");
-            ImageIcon boardSquareOver = new ImageIcon("squareover.png");
+
+            ImageIcon[] boardBoxes = {new ImageIcon("Images/tl_box.png"),new ImageIcon("Images/tc_box.png"),new ImageIcon("Images/tr_box.png"),
+                                      new ImageIcon("Images/ml_box.png"),new ImageIcon("Images/mc_box.png"),new ImageIcon("Images/mr_box.png"),
+                                      new ImageIcon("Images/bl_box.png"),new ImageIcon("Images/bc_box.png"),new ImageIcon("Images/br_box.png")};
+            ImageIcon[] boardBoxesOver = {new ImageIcon("Images/tl_box_over.png"),new ImageIcon("Images/tc_box.png"),new ImageIcon("Images/tr_box.png"),
+                                      new ImageIcon("Images/ml_box.png"),new ImageIcon("Images/mc_box.png"),new ImageIcon("Images/mr_box.png"),
+                                      new ImageIcon("Images/bl_box.png"),new ImageIcon("Images/bc_box.png"),new ImageIcon("Images/br_box.png")};
+            /*
+            ImageIcon tlBox = new ImageIcon("tl_box.png");
+            ImageIcon tcBox = new ImageIcon("tc_box.png");
+            ImageIcon trBox = new ImageIcon("tr_box.png");
+            ImageIcon mlBox = new ImageIcon("ml_box.png");
+            ImageIcon mcBox = new ImageIcon("mc_box.png");
+            ImageIcon mrBox = new ImageIcon("mr_box.png");
+            ImageIcon blBox = new ImageIcon("bl_box.png");
+            ImageIcon bcBox = new ImageIcon("bc_box.png");
+            ImageIcon brBox = new ImageIcon("br_box.png");
+            */
+
             // ulSquare1.setBorderPainted(true);
             // ulSquare1.setContentAreaFilled(false);
             // ulSquare1.setFocusPainted(false);
 
+            
             int i;
             for(i=0;i<9;++i)
                 {
-                JButton temp = new JButton(boardSquare);
-                temp.setRolloverIcon(boardSquareOver);
+                JButton temp = new JButton(new ImageIcon("Images/tl_box.png"));
+                temp.setRolloverIcon(new ImageIcon("Images/tl_box_over.png"));
                 temp.setMargin(new Insets(0,0,0,0));
                 temp.setBorderPainted(false);
                 temp.setIconTextGap(0);
                 temp.setContentAreaFilled(false);
                 temp.setFocusPainted(false);
+                temp.setPreferredSize(new Dimension(100,142));
+                temp.setSize(new Dimension(100,142));
                 boardPanel.add(temp);
                 }
-
-            middlePanel.add(boardPanel);
-            middlePanel.add(Box.createHorizontalGlue());
+           
+            middleCenterPanel.add(boardPanel);
+            
 
 
             JPanel middleRightPanel = new JPanel();
