@@ -58,13 +58,16 @@ public class Test extends JFrame {
             mainPanel.add(Box.createVerticalGlue());
             mainPanel.setBackground(backgroundColor);
 
+
+            ImageIcon title = new ImageIcon("Images/tictactoe.png");
             JPanel topPanel = new JPanel();
             topPanel.setOpaque(false);
             topPanel.setAlignmentX(.5f);
             topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
             topPanel.setBackground(backgroundColor);
             topPanel.setPreferredSize(new Dimension(800,100));
-            topPanel.add(new JLabel("Blah"));
+            topPanel.add(new JLabel(title));
+
 
             mainPanel.add(topPanel);
 
