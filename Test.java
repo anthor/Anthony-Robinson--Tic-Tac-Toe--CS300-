@@ -19,7 +19,7 @@ public class Test extends JFrame {
         {
             Color backgroundColor = new Color(255,255,255);
 
-            setSize(400,400);
+            setSize(800,600);
             setTitle("Tic Tac Toe v2.0");
             setResizable(true); // May change depending on requirements.
 
@@ -45,7 +45,7 @@ public class Test extends JFrame {
             topPanel.setAlignmentX(.5f);
             topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
             topPanel.setBackground(backgroundColor);
-
+            topPanel.setPreferredSize(new Dimension(800,100));
             topPanel.add(new JLabel("Blah"));
 
             mainPanel.add(topPanel);
@@ -115,6 +115,7 @@ public class Test extends JFrame {
             JPanel bottomPanel = new JPanel();
             bottomPanel.setAlignmentX(.5f);
             bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
+            bottomPanel.setPreferredSize(new Dimension(800,100));
             bottomPanel.add(new JLabel("Blah"));
             mainPanel.add(bottomPanel);
 
