@@ -10,8 +10,25 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Graphics;
 
+class JPanel_with_background extends JPanel
+    {
+        private Image img;
 
+        public JPanel_with_background(Image img)
+            {
+            this.img = img;
+            }
+
+        // We have to override paintComponent to have a somewhat hacked background image
+        @Override
+        public void paintComponent(Graphics g)
+            {
+            g.drawImage(img,0,0,null);
+            }
+    }
 
 public class Test extends JFrame {
 
@@ -34,14 +51,15 @@ public class Test extends JFrame {
 
             menuBar.add(menu);
             setJMenuBar(menuBar);
-
-            JPanel mainPanel = new JPanel(); // Main panel will contain all the other panels.
+            Image mainPanelBackground = new ImageIcon("Images/background.png").getImage();
+            JPanel mainPanel = new JPanel_with_background(mainPanelBackground); // Main panel will contain all the other panels.
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             add(mainPanel);
             mainPanel.add(Box.createVerticalGlue());
             mainPanel.setBackground(backgroundColor);
 
             JPanel topPanel = new JPanel();
+            topPanel.setOpaque(false);
             topPanel.setAlignmentX(.5f);
             topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
             topPanel.setBackground(backgroundColor);
@@ -53,16 +71,16 @@ public class Test extends JFrame {
 
 
             JPanel middlePanel = new JPanel();
+            middlePanel.setOpaque(false);
             middlePanel.setAlignmentX(.5f);
             middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.X_AXIS));
-            middlePanel.setBackground(backgroundColor);
             mainPanel.add(middlePanel);
 
             JPanel middleLeftPanel = new JPanel();
+            middleLeftPanel.setOpaque(false);
             middleLeftPanel.setAlignmentX(.5f);
             middleLeftPanel.setLayout(new BoxLayout(middleLeftPanel, BoxLayout.X_AXIS));
             middleLeftPanel.add(new JLabel("Blah"));
-            middleLeftPanel.setBackground(backgroundColor);
 
             middlePanel.add(middleLeftPanel);
             middlePanel.add(Box.createHorizontalGlue());
@@ -71,19 +89,19 @@ public class Test extends JFrame {
             ImageIcon boardSquare = new ImageIcon("Images/tl_box.png");
             ImageIcon boardSquareOver = new ImageIcon("Images/tl_box_over.png");
 
+            Image boardPanelBackground = new ImageIcon("Images/board_background2.png").getImage();
+            JPanel boardPanel = new JPanel_with_background(boardPanelBackground);
 
-            JPanel boardPanel = new JPanel();
-
-            boardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-            GridLayout boardPanelGridLayout = new GridLayout(3,3,0,0);
+            //boardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+            GridLayout boardPanelGridLayout = new GridLayout(3,3,2,2);
             boardPanelGridLayout.preferredLayoutSize(boardPanel);
             boardPanel.setLayout(boardPanelGridLayout);
-            boardPanel.setPreferredSize(new Dimension(boardSquare.getImage().getWidth(null)*3+6,boardSquare.getImage().getHeight(null)*3+6));
-            boardPanel.setMaximumSize(new Dimension(boardSquare.getImage().getWidth(null)*3+6,boardSquare.getImage().getHeight(null)*3+6));
+            boardPanel.setPreferredSize(new Dimension(boardSquare.getImage().getWidth(null)*3+12,boardSquare.getImage().getHeight(null)*3+8));
+            boardPanel.setMaximumSize(new Dimension(boardSquare.getImage().getWidth(null)*3+12,boardSquare.getImage().getHeight(null)*3+8));
             boardPanel.setAlignmentX(0f);
             boardPanel.setAlignmentY(.5f);
-            boardPanel.setBackground(Color.black);
-
+            //boardPanel.setBackground(Color.black);
+            boardPanel.setOpaque(false);
             
             // ulSquare1.setBorderPainted(true);
             // ulSquare1.setContentAreaFilled(false);
@@ -107,6 +125,7 @@ public class Test extends JFrame {
 
 
             JPanel middleRightPanel = new JPanel();
+            middleRightPanel.setOpaque(false);
             middleRightPanel.setAlignmentX(.5f);
             middleRightPanel.setLayout(new BoxLayout(middleRightPanel, BoxLayout.X_AXIS));
             middleRightPanel.add(new JLabel("Blah"));
