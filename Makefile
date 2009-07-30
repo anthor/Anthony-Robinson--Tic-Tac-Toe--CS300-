@@ -6,6 +6,7 @@ JC = javac
 
 CLASSES = \
 	Test.java \
+	Logic.java
 
 default: classes
 
