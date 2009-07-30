@@ -38,7 +38,7 @@ public class Test extends JFrame {
 
             setSize(800,600);
             setTitle("Tic Tac Toe v2.0");
-            setResizable(true); // May change depending on requirements.
+            setResizable(false); // May change depending on requirements.
 
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             Toolkit toolkit = getToolkit();
@@ -79,12 +79,28 @@ public class Test extends JFrame {
             middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.X_AXIS));
             mainPanel.add(middlePanel);
 
+            ImageIcon x_toggle_icon = new ImageIcon("Images/x.png");
+            ImageIcon o_toggle_icon = new ImageIcon("Images/o.png");
+            ImageIcon erase_toggle_icon = new ImageIcon("Images/erase.png");
+
+
             JPanel middleLeftPanel = new JPanel();
             middleLeftPanel.setOpaque(false);
-            middleLeftPanel.setAlignmentX(.5f);
-            middleLeftPanel.setLayout(new BoxLayout(middleLeftPanel, BoxLayout.X_AXIS));
-            middleLeftPanel.add(new JLabel("Blah"));
+            middleLeftPanel.setAlignmentX(0f);
+            middleLeftPanel.setAlignmentY(.5f);
+            middleLeftPanel.setLayout(new BoxLayout(middleLeftPanel, BoxLayout.Y_AXIS));
+            middleLeftPanel.setPreferredSize(new Dimension(100,600));
 
+            JToggleButton x_toggle = new JToggleButton(x_toggle_icon);
+            JToggleButton o_toggle = new JToggleButton(o_toggle_icon);
+            JToggleButton erase_toggle = new JToggleButton(erase_toggle_icon);
+
+            middleLeftPanel.add(Box.createRigidArea(new Dimension(50,0)));
+            
+            middleLeftPanel.add(x_toggle);
+            middleLeftPanel.add(o_toggle);
+            middleLeftPanel.add(erase_toggle);
+            
             middlePanel.add(middleLeftPanel);
             middlePanel.add(Box.createHorizontalGlue());
 
@@ -124,21 +140,24 @@ public class Test extends JFrame {
                 }
 
             middlePanel.add(boardPanel);
-            middlePanel.add(Box.createHorizontalGlue());
+            
 
 
             JPanel middleRightPanel = new JPanel();
             middleRightPanel.setOpaque(false);
-            middleRightPanel.setAlignmentX(.5f);
+            middleRightPanel.setAlignmentX(0f);
             middleRightPanel.setLayout(new BoxLayout(middleRightPanel, BoxLayout.X_AXIS));
-            middleRightPanel.add(new JLabel("Blah"));
+            middleRightPanel.add(new JLabel("Score Keeping \nOver Here Possibly"));
+            middleRightPanel.setPreferredSize(new Dimension(100,600));
             middlePanel.add(middleRightPanel);
 
+            middlePanel.add(Box.createHorizontalGlue());
             JPanel bottomPanel = new JPanel();
             bottomPanel.setAlignmentX(.5f);
+            bottomPanel.setOpaque(false);
             bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
             bottomPanel.setPreferredSize(new Dimension(800,100));
-            bottomPanel.add(new JLabel("Blah"));
+            bottomPanel.add(new JLabel("Status Text Goes Down Here"));
             mainPanel.add(bottomPanel);
 
         }
