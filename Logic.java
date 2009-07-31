@@ -72,10 +72,11 @@ public class Logic
             }
         return 0;
         }
+
     // translateMove(int) is used for the testing functionality
     // since mod(3) will need to be converted to the appropriate
     // integer values that our program uses, x=3,o=-2, blank=0
-    private static int translateMove(int int_input)
+    private int translateMove(int int_input)
         {
         if(int_input == 1) // Assign x value
             {
@@ -88,6 +89,8 @@ public class Logic
         return 0; // Else assign blank
         }
 
+    // Add move to the board by char value,
+    // 'x' 'o' or any other char (blank)
     void addMove(int row,int col,char new_value)
         {
 
@@ -98,6 +101,9 @@ public class Logic
             checkBoard();
             }
         }
+
+    // Add move by values (0,1,2) (for testing)
+    // 0 = blank, 1 = O, 2 = X
     void addMove(int row,int col,int new_value)
         {
 
@@ -136,6 +142,7 @@ public class Logic
     System.out.printf("%c|%c|%c\n",rTranslateMove(board[2][0]),
             rTranslateMove(board[2][1]),rTranslateMove(board[2][2]));
     }
+
     // checkBoard(): Checks the 3 rows, 3 columns and 2 diagonals
     // for a win, or loss. Increments the draw_counter for each
     // row column or diagonal that contains an x and o. And we need to
@@ -148,17 +155,17 @@ public class Logic
 
         int[] sums = new int[8];
 
-        // Sum columns
+        // Sum Rows
         sums[0]=board[0][0]+board[0][1]+board[0][2];
         sums[1]=board[1][0]+board[1][1]+board[1][2];
         sums[2]=board[2][0]+board[2][1]+board[2][2];
 
-        // Sum rows
+        // Sum Columns
         sums[3]=board[0][0]+board[1][0]+board[2][0];
         sums[4]=board[0][1]+board[1][1]+board[2][1];
         sums[5]=board[0][2]+board[1][2]+board[2][2];
 
-        // Sum diagonals
+        // Sum Diagonals
         sums[6]=board[0][0]+board[1][1]+board[2][2];
         sums[7]=board[0][2]+board[1][1]+board[2][0];
 
@@ -198,10 +205,12 @@ public class Logic
         return 0; // No win loss or draw.
         }
 
+    // disableInput() will Eventually will disable the gui from adding more moves.
     void disableInput()
         {
         System.out.printf("This is where we would diable any more user input\n");
         }
+
     public Logic()
         {
 
@@ -211,15 +220,27 @@ public class Logic
         {
         Logic new_board = new Logic();
 
-        Date current = new Date();
-        Random generator = new Random(current.getTime());
+        Date current = new Date(); // To seed the random number generator
+        Random generator = new Random(current.getTime()); // To give better tests
 
         /*
          *
-         * Built arg reader to implement testing
-         * run with 9 char's separated by spaces
+         * Built argument reader to implement testing the unit
+         * You can run it with 9 char's separated by spaces.
          * X, O, R means X, O, or Random. Any other
          * char means blank.
+         *
+         * Example: Java Logic X X X B R B O O O
+         *
+         * Corresponds to:
+         *
+         * X|X|X
+         * -----
+         *  |X|
+         * -----
+         * O|O|O
+         *
+         *
          * ********************************************
          * Run on input:
          * java Logic X O X R R R O X O
@@ -288,6 +309,13 @@ public class Logic
          * -----
          *  | |O
          *
+         * ********************************************
+         * Checked a ton of random cases (R R R R R R R R R)
+         *
+         * Looks good now although the early draw could
+         * be improved to detect earlier cases.
+         *
+         * ********************************************
          */
         if(args.length==9) // For testing different cases
             {
@@ -309,17 +337,19 @@ public class Logic
                 }
            
             }
-        else
+        else // Generate a Random Tic Tac Toe Board for Testing
             {
             new_board.addMove(0, 0, generator.nextInt()%3);
             new_board.addMove(0, 1, generator.nextInt()%3);
             new_board.addMove(0, 2, generator.nextInt()%3);
+            new_board.addMove(1, 0, generator.nextInt()%3);
+            new_board.addMove(1, 1, generator.nextInt()%3);
+            new_board.addMove(1, 2, generator.nextInt()%3);
             new_board.addMove(2, 1, generator.nextInt()%3);
             new_board.addMove(2, 0, generator.nextInt()%3);
             new_board.addMove(2, 2, generator.nextInt()%3);
-            new_board.addMove(1, 0, generator.nextInt()%3);
-            new_board.addMove(1, 2, generator.nextInt()%3);
             }
-        new_board.displayBoard();
+
+        new_board.displayBoard(); // Displays the board to the console for testing
         }
 }
