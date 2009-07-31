@@ -15,7 +15,7 @@
  * nothing is in the row/column/diagonal. So, the cases are all unique
  * where a 9 or a -6 represent a win, all others help us decide an early
  * draw (if there is an x and o in every column,row,diagonal then it is a
- * draw. => the sum of the r/c/d is 4,-1,3, or 1).
+ * draw. => the sum of the r/c/d is 4,-1 or 1).
  *
  * PSUEDO CODE:
  *
@@ -48,6 +48,10 @@
  *
  */
 
+import java.util.Random;
+import java.util.Date;
+
+
 public class Logic
 {
 
@@ -71,7 +75,7 @@ public class Logic
     // translateMove(int) is used for the testing functionality
     // since mod(3) will need to be converted to the appropriate
     // integer values that our program uses, x=3,o=-2, blank=0
-    private int translateMove(int int_input)
+    private static int translateMove(int int_input)
         {
         if(int_input == 1) // Assign x value
             {
@@ -85,6 +89,16 @@ public class Logic
         }
 
     void addMove(int row,int col,char new_value)
+        {
+
+        // check for row column bounds
+        if(row>=0 && row<3 && col>=0 && col<3)
+            {
+            board[row][col] = translateMove(new_value);
+            checkBoard();
+            }
+        }
+    void addMove(int row,int col,int new_value)
         {
 
         // check for row column bounds
@@ -155,7 +169,7 @@ public class Logic
             {
             //Check for x and o in the same row/col/diag and
             //increment counter to detect early draw.
-            if(sums[i]==4||sums[i]==3||sums[i]==1||sums[i]==-1)
+            if(sums[i]==4||sums[i]==1||sums[i]==-1)
                 {
                 ++draw_counter;
                 }
@@ -196,30 +210,115 @@ public class Logic
     public static void main(String[] args)
         {
         Logic new_board = new Logic();
-        
-        System.out.printf("%d\n",args.length);
-        if(args.length==9)
+
+        Date current = new Date();
+        Random generator = new Random(current.getTime());
+
+        /*
+         *
+         * Built arg reader to implement testing
+         * run with 9 char's separated by spaces
+         * X, O, R means X, O, or Random. Any other
+         * char means blank.
+         * ********************************************
+         * Run on input:
+         * java Logic X O X R R R O X O
+         *
+         * Result:
+         * Early draw detected!!
+         *
+         * X|O|X
+         * -----
+         *  | |X
+         * -----
+         * O|X|O
+         *
+         * Whcih it should not have, found the bug was that
+         * I let 3 (X) be a way for a row to increment the
+         * draw counter, which it should not.
+         *
+         * Fixed it in the code, ran again
+         *
+         * java Logic X O X R R R O X O
+         *
+         * X|O|X
+         * -----
+         *  | |X
+         * -----
+         * O|X|O
+         *
+         * Correct answer.
+         * ********************************************
+         * Checking for actual Draw (X O X X O X O X O)
+         *
+         * Run on input:
+         * java Logic X O X X O X O X O
+         *
+         * Result:
+         * Early draw detected!!
+         *
+         * X|O|X
+         * -----
+         * X|O|X
+         * -----
+         * O|X|O
+         *
+         * Correct.
+         *
+         * ********************************************
+         * Checking for win (X X X B B B B B B)
+         *
+         * X has won!!
+         * This is where we would diable any more user input
+         *
+         * X|X|X
+         * -----
+         *  | |
+         * -----
+         *  | |
+         *
+         * ********************************************
+         * Checking for O win (O B B B O B B B O)
+         * O has won!!
+         * This is where we would diable any more user input
+         *
+         * O| |
+         * -----
+         *  |O|
+         * -----
+         *  | |O
+         *
+         */
+        if(args.length==9) // For testing different cases
             {
-            new_board.addMove(0, 0, args[0].charAt(0));
-            new_board.addMove(0, 1, args[1].charAt(0));
-            new_board.addMove(0, 2, args[2].charAt(0));
-            new_board.addMove(1, 0, args[3].charAt(0));
-            new_board.addMove(1, 1, args[4].charAt(0));
-            new_board.addMove(1, 2, args[5].charAt(0));
-            new_board.addMove(2, 0, args[6].charAt(0));
-            new_board.addMove(2, 1, args[7].charAt(0));
-            new_board.addMove(2, 2, args[8].charAt(0));
+            int j;
+            int i;
+            for(j=0;j<3;++j)
+                {
+                for(i=0;i<3;++i)
+                    {
+                        if(args[i+j*3].charAt(0)=='R')
+                        {
+                        new_board.addMove(j, i, generator.nextInt()%3);
+                        }
+                        else
+                        {
+                        new_board.addMove(j, i, args[i+j*3].charAt(0));
+                        }
+                    }
+                }
+           
             }
         else
             {
-            new_board.addMove(0, 0, 'x');
-            new_board.addMove(0, 1, 'o');
-            new_board.addMove(0, 2, 'X');
-            new_board.addMove(2, 1, 'x');
-            new_board.addMove(2, 0, 'o');
-            new_board.addMove(2, 2, 'x');
-            new_board.addMove(1, 0, 'o');
-            new_board.addMove(1, 2, 'x');
+            new_board.addMove(0, 0, generator.nextInt()%3);
+            new_board.addMove(0, 1, generator.nextInt()%3);
+            new_board.addMove(0, 2, generator.nextInt()%3);
+            new_board.addMove(2, 1, generator.nextInt()%3);
+            new_board.addMove(2, 0, generator.nextInt()%3);
+            new_board.addMove(2, 2, generator.nextInt()%3);
+            new_board.addMove(1, 0, generator.nextInt()%3);
+            new_board.addMove(1, 2, generator.nextInt()%3);
             }
         new_board.displayBoard();
         }
