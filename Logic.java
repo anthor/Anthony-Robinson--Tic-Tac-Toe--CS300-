@@ -129,19 +129,20 @@ public class Logic
         }
     return ' ';
     }
+
     // displayBoard outputs the board contents to the console
     // for debugging / testing purposes.
     void displayBoard()
-    {
-    System.out.printf("\n%c|%c|%c\n",rTranslateMove(board[0][0]),
-            rTranslateMove(board[0][1]),rTranslateMove(board[0][2]));
-    System.out.printf("-----\n");
-    System.out.printf("%c|%c|%c\n",rTranslateMove(board[1][0]),
-            rTranslateMove(board[1][1]),rTranslateMove(board[1][2]));
-    System.out.printf("-----\n");
-    System.out.printf("%c|%c|%c\n",rTranslateMove(board[2][0]),
-            rTranslateMove(board[2][1]),rTranslateMove(board[2][2]));
-    }
+        {
+        System.out.printf("\n%c|%c|%c\n",rTranslateMove(board[0][0]),
+                rTranslateMove(board[0][1]),rTranslateMove(board[0][2]));
+        System.out.printf("-----\n");
+        System.out.printf("%c|%c|%c\n",rTranslateMove(board[1][0]),
+                rTranslateMove(board[1][1]),rTranslateMove(board[1][2]));
+        System.out.printf("-----\n");
+        System.out.printf("%c|%c|%c\n",rTranslateMove(board[2][0]),
+                rTranslateMove(board[2][1]),rTranslateMove(board[2][2]));
+        }
 
     // checkBoard(): Checks the 3 rows, 3 columns and 2 diagonals
     // for a win, or loss. Increments the draw_counter for each
@@ -317,7 +318,11 @@ public class Logic
          *
          * ********************************************
          */
-        if(args.length==9) // For testing different cases
+
+
+        // For testing different cases, adds 9 arguments given
+        // by command line to the board.
+        if(args.length==9) 
             {
             int j;
             int i;
@@ -325,11 +330,11 @@ public class Logic
                 {
                 for(i=0;i<3;++i)
                     {
-                        if(args[i+j*3].charAt(0)=='R')
+                    if(args[i+j*3].charAt(0)=='R') // Replace R w/ X or O
                         {
                         new_board.addMove(j, i, generator.nextInt()%3);
                         }
-                        else
+                    else // Add the char give to the board.
                         {
                         new_board.addMove(j, i, args[i+j*3].charAt(0));
                         }
