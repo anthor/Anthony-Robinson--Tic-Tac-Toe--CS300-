@@ -176,7 +176,7 @@ public class GUI extends JFrame {
 
     public static void main(String[] args)
         {
-        Test test = new Test();
+        GUI test = new GUI();
         test.setVisible(true);
         }
 }
