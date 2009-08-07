@@ -1,15 +1,15 @@
-/*
- * Test java program to remember how to program in java
+/* Copyright (c) 2009, Anthony Robinson
+ * All Rights Reserved.
  *
- * Change in master...
- * Experiment version
+ * Test.java
+ *
+ * This is meant to be a test
  */
 import javax.swing.*;
 import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Color;
 import java.awt.Image;
 import java.awt.Graphics;
 
@@ -22,7 +22,8 @@ class JPanel_with_background extends JPanel
             this.img = img;
             }
 
-        // We have to override paintComponent to have a somewhat hacked background image
+        // We have to override paintComponent to
+        // have a somewhat hacked background image
         @Override
         public void paintComponent(Graphics g)
             {
@@ -34,8 +35,6 @@ public class Test extends JFrame {
 
     public Test()
         {
-            Color backgroundColor = new Color(255,255,255);
-
             setSize(800,600);
             setTitle("Tic Tac Toe v2.0");
             setResizable(false); // May change depending on requirements.
@@ -51,45 +50,51 @@ public class Test extends JFrame {
 
             menuBar.add(menu);
             setJMenuBar(menuBar);
-            Image mainPanelBackground = new ImageIcon("Images/background.png").getImage();
-            JPanel mainPanel = new JPanel_with_background(mainPanelBackground); // Main panel will contain all the other panels.
+            Image mainPanelBackground = 
+                    new ImageIcon("Images/background.png").getImage();
+
+            // Main panel will contain all the other panels.
+            JPanel mainPanel = new JPanel_with_background(mainPanelBackground); 
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-            add(mainPanel);
             mainPanel.add(Box.createVerticalGlue());
-            mainPanel.setBackground(backgroundColor);
+            add(mainPanel);
 
-
-            ImageIcon title = new ImageIcon("Images/tictactoe.png");
+            // topPanel just holds the title image and makes the layout cleaner.
             JPanel topPanel = new JPanel();
             topPanel.setOpaque(false);
             topPanel.setAlignmentX(.5f);
             topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-            topPanel.setBackground(backgroundColor);
             topPanel.setPreferredSize(new Dimension(800,100));
+            ImageIcon title = new ImageIcon("Images/tictactoe.png");
             topPanel.add(new JLabel(title));
 
 
             mainPanel.add(topPanel);
 
 
-
+            // middlePanel will contain three other JPanels.
+            // middleLeftPanel, boardPanel, middleRightPanel
             JPanel middlePanel = new JPanel();
             middlePanel.setOpaque(false);
             middlePanel.setAlignmentX(.5f);
             middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.X_AXIS));
             mainPanel.add(middlePanel);
 
-            ImageIcon x_toggle_icon = new ImageIcon("Images/x.png");
-            ImageIcon o_toggle_icon = new ImageIcon("Images/o.png");
-            ImageIcon erase_toggle_icon = new ImageIcon("Images/erase.png");
+            
 
 
             JPanel middleLeftPanel = new JPanel();
             middleLeftPanel.setOpaque(false);
             middleLeftPanel.setAlignmentX(0f);
             middleLeftPanel.setAlignmentY(.5f);
-            middleLeftPanel.setLayout(new BoxLayout(middleLeftPanel, BoxLayout.Y_AXIS));
+            middleLeftPanel.setLayout(
+                    new BoxLayout(middleLeftPanel, BoxLayout.Y_AXIS));
             middleLeftPanel.setPreferredSize(new Dimension(100,600));
+
+            // Set up toggle button icons for selecting whose turn it is.
+            ImageIcon x_toggle_icon = new ImageIcon("Images/x.png");
+            ImageIcon o_toggle_icon = new ImageIcon("Images/o.png");
+            ImageIcon erase_toggle_icon = new ImageIcon("Images/erase.png");
 
             JToggleButton x_toggle = new JToggleButton(x_toggle_icon);
             JToggleButton o_toggle = new JToggleButton(o_toggle_icon);
@@ -108,24 +113,25 @@ public class Test extends JFrame {
             ImageIcon boardSquare = new ImageIcon("Images/tl_box.png");
             ImageIcon boardSquareOver = new ImageIcon("Images/tl_box_over.png");
 
-            Image boardPanelBackground = new ImageIcon("Images/board_background2.png").getImage();
+            // Set up the Tic-Tac-Toe panel (boardPanelBackground) with a
+            // background image and add the buttons for the individual spaces.
+            Image boardPanelBackground =
+                    new ImageIcon("Images/board_background2.png").getImage();
             JPanel boardPanel = new JPanel_with_background(boardPanelBackground);
 
-            //boardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
             GridLayout boardPanelGridLayout = new GridLayout(3,3,2,2);
             boardPanelGridLayout.preferredLayoutSize(boardPanel);
             boardPanel.setLayout(boardPanelGridLayout);
-            boardPanel.setPreferredSize(new Dimension(boardSquare.getImage().getWidth(null)*3+12,boardSquare.getImage().getHeight(null)*3+8));
-            boardPanel.setMaximumSize(new Dimension(boardSquare.getImage().getWidth(null)*3+12,boardSquare.getImage().getHeight(null)*3+8));
+            boardPanel.setPreferredSize(
+                    new Dimension(boardSquare.getImage().getWidth(null)*3+12,
+                    boardSquare.getImage().getHeight(null)*3+8));
+            boardPanel.setMaximumSize(
+                    new Dimension(boardSquare.getImage().getWidth(null)*3+12,
+                    boardSquare.getImage().getHeight(null)*3+8));
             boardPanel.setAlignmentX(0f);
             boardPanel.setAlignmentY(.5f);
-            //boardPanel.setBackground(Color.black);
             boardPanel.setOpaque(false);
-            
-            // ulSquare1.setBorderPainted(true);
-            // ulSquare1.setContentAreaFilled(false);
-            // ulSquare1.setFocusPainted(false);
-
+           
             int i;
             for(i=0;i<9;++i)
                 {
@@ -141,23 +147,27 @@ public class Test extends JFrame {
 
             middlePanel.add(boardPanel);
             
-
-
+            // middleRightPanel is just a place holder for now to make sure
+            // that the board is centered in the window.
             JPanel middleRightPanel = new JPanel();
             middleRightPanel.setOpaque(false);
             middleRightPanel.setAlignmentX(0f);
-            middleRightPanel.setLayout(new BoxLayout(middleRightPanel, BoxLayout.X_AXIS));
-            middleRightPanel.add(new JLabel("Score Keeping \nOver Here Possibly"));
+            middleRightPanel.setLayout(
+                    new BoxLayout(middleRightPanel, BoxLayout.X_AXIS));
             middleRightPanel.setPreferredSize(new Dimension(100,600));
-            middlePanel.add(middleRightPanel);
 
+            middlePanel.add(middleRightPanel);
             middlePanel.add(Box.createHorizontalGlue());
+
+            // Set up the bottom panel which will hold the status text...
+            // Most likely whose turn it is, and announcing a winner.
             JPanel bottomPanel = new JPanel();
             bottomPanel.setAlignmentX(.5f);
             bottomPanel.setOpaque(false);
             bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
             bottomPanel.setPreferredSize(new Dimension(800,100));
             bottomPanel.add(new JLabel("Status Text Goes Down Here"));
+
             mainPanel.add(bottomPanel);
 
         }
