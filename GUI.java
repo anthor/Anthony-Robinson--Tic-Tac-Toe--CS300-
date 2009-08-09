@@ -303,6 +303,8 @@ public class GUI extends JFrame implements ActionListener{
             boardButtons[i].setIconTextGap(0);
             boardButtons[i].setContentAreaFilled(false);
             boardButtons[i].setFocusPainted(false);
+            boardButtons[i].addActionListener(this);
+            boardButtons[i].setActionCommand(i+"_clicked");
             boardPanel.add(boardButtons[i]);
             }
 
@@ -333,24 +335,52 @@ public class GUI extends JFrame implements ActionListener{
 
         }
 
+    // Implements java.awt.event.ActionListener.actionPerformed
+    // listens for a toggle button change from x, o, or earse
+    // toggle buttons. Then calls the appropriate methods to update
+    // the mouseover icons on the board.
     public void actionPerformed(ActionEvent e)
         {
-        if(e.getActionCommand()=="ToggleX")
+        System.out.println(e.getActionCommand());
+        // X Toggle Button has been pressed.
+        if(e.getActionCommand().equals("ToggleX"))
             {
-            updateIcons(1);
-            System.out.println("X Has been pressed");
+            updateIcons(1); // Take care of images throughout
             }
-        else if(e.getActionCommand()=="ToggleO")
+        // O Toggle Button has been pressed.
+        else if(e.getActionCommand().equals("ToggleO"))
             {
-            updateIcons(2);
-            System.out.println("O Has been pressed");
+            updateIcons(2); // Take care of images throughout
             }
-        else if(e.getActionCommand()=="ToggleE")
+        // E Toggle Button has been pressed.
+        else if(e.getActionCommand().equals("ToggleE"))
             {
-            updateIcons(3);
-            System.out.println("E Has been pressed");
+            updateIcons(3); // Take care of images throughout
+            }
+        else if(e.getActionCommand().contains("clicked"))
+            {
+            String[] split_command = e.getActionCommand().split("_");
+            int board_number = -1;
+            board_number = Integer.parseInt(split_command[0]);
+            if(board_number>=0 && board_number<=8)
+                {
+                if(current_player == 'x')
+                    {
+                    boardButtons[board_number].setIcon(board_square_x);
+                    }
+                else if(current_player == 'o')
+                    {
+                    boardButtons[board_number].setIcon(board_square_o);
+                    }
+                else if(current_player == 'e')
+                    {
+                    boardButtons[board_number].setIcon(board_square);
+                    }
+                }
+            
             }
         }
+    
     public static void main(String[] args)
         {
         GUI test = new GUI();
