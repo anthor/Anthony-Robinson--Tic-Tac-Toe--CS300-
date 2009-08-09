@@ -341,7 +341,6 @@ public class GUI extends JFrame implements ActionListener{
     // the mouseover icons on the board.
     public void actionPerformed(ActionEvent e)
         {
-        System.out.println(e.getActionCommand());
         // X Toggle Button has been pressed.
         if(e.getActionCommand().equals("ToggleX"))
             {
@@ -357,11 +356,22 @@ public class GUI extends JFrame implements ActionListener{
             {
             updateIcons(3); // Take care of images throughout
             }
+
+        // If the action command contains the string "clicked"
+        // then it is from one of the board squares (buttons)
+        // so get the board number out of the string and change
+        // the clicked buttons icon to whatever player is selected.
         else if(e.getActionCommand().contains("clicked"))
             {
+            // String should be i_clicked, so split it with _
             String[] split_command = e.getActionCommand().split("_");
+
+            // In case we don't get a valid integer
+            // out of Integer.parseInt set board_number to -1
             int board_number = -1;
             board_number = Integer.parseInt(split_command[0]);
+
+            // Check for valid range of board numbers
             if(board_number>=0 && board_number<=8)
                 {
                 if(current_player == 'x')
