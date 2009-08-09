@@ -5,6 +5,10 @@
  *
  * This is meant to be the GUI for the CS300 Tic-Tac-Toe game project.
  */
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import java.awt.Toolkit;
 import java.awt.Dimension;
@@ -31,8 +35,159 @@ class JPanel_with_background extends JPanel
             }
     }
 
-public class GUI extends JFrame {
+public class GUI extends JFrame implements ActionListener{
 
+        // Status variable to let us know whose turn it is.
+        private char current_player = 'n';
+
+        // Set up toggle buttons for selecting whose turn it is.
+        private ImageIcon x_toggle_icon = new ImageIcon("Images/x.png");
+        private ImageIcon o_toggle_icon = new ImageIcon("Images/o.png");
+        private ImageIcon erase_toggle_icon = new ImageIcon("Images/erase.png");
+
+        private JToggleButton x_toggle = new JToggleButton(x_toggle_icon);
+        private JToggleButton o_toggle = new JToggleButton(o_toggle_icon);
+        private JToggleButton erase_toggle = new JToggleButton(erase_toggle_icon);
+
+
+        // Set up tic-tac-toe board icons for hover, pressing, and selected
+        private ImageIcon board_square = new ImageIcon("Images/box.png");
+        private ImageIcon board_square_hover =
+                new ImageIcon("Images/box_hover.png");
+
+
+        private ImageIcon board_square_x =
+                new ImageIcon("Images/x_box_selected.png");
+        private ImageIcon board_square_x_hover =
+                new ImageIcon("Images/x_box_hover.png");
+        private ImageIcon board_square_x_pressed =
+                new ImageIcon("Images/x_box_pressed.png");
+
+        private ImageIcon board_square_o =
+                new ImageIcon("Images/o_box_selected.png");
+        private ImageIcon board_square_o_hover =
+                new ImageIcon("Images/o_box_hover.png");
+        private ImageIcon board_square_o_pressed =
+                new ImageIcon("Images/o_box_pressed.png");
+
+        private ImageIcon board_square_e_pressed =
+                new ImageIcon("Images/e_box_pressed.png");
+        private ImageIcon board_square_e_hover =
+                new ImageIcon("Images/e_box_hover.png");
+
+
+        // Set up the array of buttons for the tic-tac-toe board
+        private JButton[] boardButtons = {new JButton(board_square),
+            new JButton(board_square),new JButton(board_square),
+            new JButton(board_square),new JButton(board_square),
+            new JButton(board_square),new JButton(board_square),
+            new JButton(board_square),new JButton(board_square)};
+
+     
+
+
+    void selectToggle(char button_to_toggle)
+    {
+    int i;
+
+    if(button_to_toggle=='x')
+        {
+        x_toggle.setSelected(true);
+        o_toggle.setSelected(false);
+        erase_toggle.setSelected(false);
+
+
+        for(i=0;i<9;++i)
+            {
+            boardButtons[i].setRolloverIcon(board_square_x_hover);
+            boardButtons[i].setPressedIcon(board_square_x_pressed);
+            }
+        }
+    else if(button_to_toggle=='o')
+        {
+        x_toggle.setSelected(false);
+        o_toggle.setSelected(true);
+        erase_toggle.setSelected(false);
+
+        for(i=0;i<9;++i)
+            {
+            boardButtons[i].setRolloverIcon(board_square_o_hover);
+            boardButtons[i].setPressedIcon(board_square_o_pressed);
+            }
+        }
+    else if(button_to_toggle=='e')
+        {
+        x_toggle.setSelected(false);
+        o_toggle.setSelected(false);
+        erase_toggle.setSelected(true);
+
+        for(i=0;i<9;++i)
+            {
+            boardButtons[i].setRolloverIcon(board_square_e_hover);
+            boardButtons[i].setPressedIcon(board_square_e_pressed);
+            }
+        }
+    else
+        {
+        x_toggle.setSelected(false);
+        o_toggle.setSelected(false);
+
+        for(i=0;i<9;++i)
+            {
+            boardButtons[i].setRolloverIcon(null);
+            boardButtons[i].setPressedIcon(null);
+            }
+        }
+    }
+
+    void updateIcons(int selected_toggle)
+        {
+        if(selected_toggle == 1) // X is being clicked
+            {
+            // If X is being unselected then select eraser as default
+            if(x_toggle.getSelectedObjects()==null) 
+                {
+                selectToggle('e'); // Select eraser
+                current_player='e';
+                }
+            // If x is being selected unselect other two buttons
+            else
+                {
+                selectToggle('x');
+                current_player='x';
+                }
+            }
+        else if(selected_toggle == 2) // O is being clicked
+            {
+            // If O is being unselected then select eraser as default
+            if(o_toggle.getSelectedObjects()==null)
+                {
+                selectToggle('e');
+                current_player='e';
+                }
+            // If O is being selected unselect other two buttons
+            else
+                {
+                selectToggle('o');
+                current_player='o';
+                }
+            }
+        else // Default to eraser being clicked
+            {
+            // If O is being unselected then select eraser as default
+            if(erase_toggle.getSelectedObjects()==null)
+                {
+                selectToggle('n');
+                current_player='n';
+                }
+            else
+                {
+                selectToggle('e');
+                current_player='e';
+                }
+            }
+
+        }
     public GUI()
         {
         setSize(800,600);
@@ -45,9 +200,13 @@ public class GUI extends JFrame {
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
 
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("File");
 
-        menuBar.add(menu);
+        JMenu file_menu = new JMenu("File");
+        JMenu help_menu = new JMenu("Help");
+
+        menuBar.add(file_menu);
+        menuBar.add(help_menu);
+
         setJMenuBar(menuBar);
         Image mainPanelBackground = 
                 new ImageIcon("Images/background.png").getImage();
@@ -90,14 +249,16 @@ public class GUI extends JFrame {
                 new BoxLayout(middleLeftPanel, BoxLayout.Y_AXIS));
         middleLeftPanel.setPreferredSize(new Dimension(100,600));
 
-        // Set up toggle button icons for selecting whose turn it is.
-        ImageIcon x_toggle_icon = new ImageIcon("Images/x.png");
-        ImageIcon o_toggle_icon = new ImageIcon("Images/o.png");
-        ImageIcon erase_toggle_icon = new ImageIcon("Images/erase.png");
+        
 
-        JToggleButton x_toggle = new JToggleButton(x_toggle_icon);
-        JToggleButton o_toggle = new JToggleButton(o_toggle_icon);
-        JToggleButton erase_toggle = new JToggleButton(erase_toggle_icon);
+        x_toggle.addActionListener(this);
+        x_toggle.setActionCommand("ToggleX");
+
+        o_toggle.addActionListener(this);
+        o_toggle.setActionCommand("ToggleO");
+
+        erase_toggle.addActionListener(this);
+        erase_toggle.setActionCommand("ToggleE");
 
         middleLeftPanel.add(Box.createRigidArea(new Dimension(50,0)));
             
@@ -109,8 +270,7 @@ public class GUI extends JFrame {
         middlePanel.add(Box.createHorizontalGlue());
 
 
-        ImageIcon boardSquare = new ImageIcon("Images/tl_box.png");
-        ImageIcon boardSquareOver = new ImageIcon("Images/tl_box_over.png");
+        
 
         // Set up the Tic-Tac-Toe panel (boardPanelBackground) with a
         // background image and add the buttons for the individual spaces.
@@ -123,28 +283,27 @@ public class GUI extends JFrame {
         boardPanel.setLayout(boardPanelGridLayout);
 
         boardPanel.setPreferredSize(
-                new Dimension(boardSquare.getImage().getWidth(null)*3+12,
-                boardSquare.getImage().getHeight(null)*3+8));
+                new Dimension(board_square.getImage().getWidth(null)*3+12,
+                board_square.getImage().getHeight(null)*3+8));
 
         boardPanel.setMaximumSize(
-                new Dimension(boardSquare.getImage().getWidth(null)*3+12,
-                boardSquare.getImage().getHeight(null)*3+8));
+                new Dimension(board_square.getImage().getWidth(null)*3+12,
+                board_square.getImage().getHeight(null)*3+8));
 
         boardPanel.setAlignmentX(0f);
         boardPanel.setAlignmentY(.5f);
         boardPanel.setOpaque(false);
-           
+
+        
         int i;
         for(i=0;i<9;++i)
             {
-            JButton temp = new JButton(boardSquare);
-            temp.setRolloverIcon(boardSquareOver);
-            temp.setMargin(new Insets(0,0,0,0));
-            temp.setBorderPainted(false);
-            temp.setIconTextGap(0);
-            temp.setContentAreaFilled(false);
-            temp.setFocusPainted(false);
-            boardPanel.add(temp);
+            boardButtons[i].setMargin(new Insets(0,0,0,0));
+            boardButtons[i].setBorderPainted(false);
+            boardButtons[i].setIconTextGap(0);
+            boardButtons[i].setContentAreaFilled(false);
+            boardButtons[i].setFocusPainted(false);
+            boardPanel.add(boardButtons[i]);
             }
 
         middlePanel.add(boardPanel);
@@ -174,6 +333,24 @@ public class GUI extends JFrame {
 
         }
 
+    public void actionPerformed(ActionEvent e)
+        {
+        if(e.getActionCommand()=="ToggleX")
+            {
+            updateIcons(1);
+            System.out.println("X Has been pressed");
+            }
+        else if(e.getActionCommand()=="ToggleO")
+            {
+            updateIcons(2);
+            System.out.println("O Has been pressed");
+            }
+        else if(e.getActionCommand()=="ToggleE")
+            {
+            updateIcons(3);
+            System.out.println("E Has been pressed");
+            }
+        }
     public static void main(String[] args)
         {
         GUI test = new GUI();
