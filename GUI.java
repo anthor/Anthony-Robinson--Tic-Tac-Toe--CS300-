@@ -85,7 +85,9 @@ public class GUI extends JFrame implements ActionListener{
 
      
 
-
+    // Logic to make sure only one toggle button is selected
+    // and to change it to eraser automatically when x or o
+    // is unselected.
     void selectToggle(char button_to_toggle)
     {
     int i;
@@ -140,6 +142,10 @@ public class GUI extends JFrame implements ActionListener{
         }
     }
 
+    // updateIcons takes an integer that represents what toggle button
+    // is being selected, and determines using .getSelectedObjects()
+    // whether or not the toggle button is being toggled up or down
+    // then calls the appropriate methods to update the icons.
     void updateIcons(int selected_toggle)
         {
         if(selected_toggle == 1) // X is being clicked
@@ -188,6 +194,7 @@ public class GUI extends JFrame implements ActionListener{
             }
 
         }
+    
     public GUI()
         {
         setSize(800,600);
